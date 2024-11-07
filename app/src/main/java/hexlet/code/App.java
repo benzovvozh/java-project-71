@@ -23,7 +23,7 @@ public class App implements Callable<Integer> {
     private String filepath2;
     @Override
     public Integer call() throws Exception {
-        return null;
+        return 0;
     }
 
     public static void main(String[] args) {
