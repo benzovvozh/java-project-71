@@ -17,7 +17,7 @@ jobs:
       - uses: gradle/gradle-build-action@v3
         with:
           gradle-version: 8.7
-      - run: make checkstyleMain
+      - run: make lint
       - run: make test
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
