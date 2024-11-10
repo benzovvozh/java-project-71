@@ -22,7 +22,7 @@ public class Differ {
         var file2 = Parser.parse(content2, fileType2);
 
         List<Map<String, Object>> result = MapComparator.compare(file1, file2);
-        return StylishFormatter.format(result);
+        return Stylish.format(result);
     }
 
     private static String readFile(String filepath) throws Exception {

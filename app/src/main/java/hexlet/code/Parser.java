@@ -18,7 +18,7 @@ public class Parser {
             ObjectMapper mapperJson = new ObjectMapper();
             map = mapperJson.readValue(content, new TypeReference<Map<String, Object>>() {
             });
-        } else if (format.equals("yaml")) {
+        } else if (format.equals("yaml") || format.equals("yml")) {
             ObjectMapper mapperYaml = new YAMLMapper();
             map = mapperYaml.readValue(content, new TypeReference<Map<String, Object>>() {
             });

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class StylishFormatter {
+public class Stylish {
     public static String format(List<Map<String, Object>> result) {
         StringBuilder result1 = new StringBuilder("{\n");
         for (Map<String, Object> item : result) {

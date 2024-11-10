@@ -24,18 +24,28 @@ public class MapComparator {
         List<Map<String, Object>> result = new ArrayList<>();
 
         for (var key : keys) {
+            var value1 = file1.get(key);
+            var value2 = file2.get(key);
+
+            if (value1 == null) {
+                value1 = "null";
+            }
+            if (value2 == null) {
+                value2 = "null";
+            }
+
 
             if (file1.containsKey(key) && file2.containsKey(key)) {           //если есть и в 1 и в 2
-                if (file1.get(key).equals(file2.get(key))) {                  //если равны
-                    matches.put((String) "  " + key, file1.get(key));
-                } else if (!file1.get(key).equals(file2.get(key))) {          //если не равны
-                    matches.put((String) "- " + key, file1.get(key));         //добавляем оба значения
-                    matches.put((String) "+ " + key, file2.get(key));
+                if (value1.equals(value2)) {                  //если равны
+                    matches.put((String) "  " + key, (value1).toString());
+                } else if (!value1.equals(value2)) {          //если не равны
+                    matches.put((String) "- " + key, (value1).toString());         //добавляем оба значения
+                    matches.put((String) "+ " + key, (value2).toString());
                 }
             } else if (file1.containsKey(key) && (!file2.containsKey(key))) { //если есть в 1, но нет в 2
-                matches.put((String) "- " + key, file1.get(key));
+                matches.put((String) "- " + key, (value1).toString());
             } else {                                                          // если нет в 1, но есть во 2
-                matches.put((String) "+ " + key, file2.get(key));
+                matches.put((String) "+ " + key, (value2).toString());
             }
         }
         result.add(matches);
