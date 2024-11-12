@@ -54,6 +54,13 @@ class AppTest {
         assertEquals(expected.trim(), actual.trim());
     }
 
+//    @Test
+//    void callJson() throws Exception {
+//        String expected = excepted4;
+//        String actual = Differ.generate("file1.json", "file2.json", "json");
+//        assertEquals(expected.trim(), actual.trim());
+//    }
+
 
 }
 
