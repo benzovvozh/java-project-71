@@ -1,5 +1,6 @@
 package hexlet.code;
 
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -7,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Differ {
-
-
 
 
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
@@ -22,7 +21,9 @@ public class Differ {
         var file2 = Parser.parse(content2, fileType2);
 
         List<Map<String, Object>> result = MapComparator.compare(file1, file2);
-        return Stylish.format(result);
+
+
+        return Formatter.format(result, format);
     }
 
     private static String readFile(String filepath) throws Exception {

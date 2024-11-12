@@ -15,10 +15,10 @@ public class MapComparator {
         keys.addAll(file2.keySet());
 
         Map<String, Object> matches = new TreeMap<>((key1, key2) -> {
-            if (key1.startsWith("+ ") && key2.startsWith("- ")) {
+            if (key1.startsWith("up+") && key2.startsWith("up-")) {
                 return 1;
             }
-            return key1.substring(2).compareTo(key2.substring(2));
+            return key1.substring(3).compareTo(key2.substring(3));
         });
 
         List<Map<String, Object>> result = new ArrayList<>();
@@ -37,15 +37,15 @@ public class MapComparator {
 
             if (file1.containsKey(key) && file2.containsKey(key)) {           //если есть и в 1 и в 2
                 if (value1.equals(value2)) {                  //если равны
-                    matches.put((String) "  " + key, (value1).toString());
+                    matches.put((String) "not" + key, (value1)); // значение не изменилось
                 } else if (!value1.equals(value2)) {          //если не равны
-                    matches.put((String) "- " + key, (value1).toString());         //добавляем оба значения
-                    matches.put((String) "+ " + key, (value2).toString());
+                    matches.put((String) "up-" + key, (value1)); // значение изменилось
+                    matches.put((String) "up+" + key, (value2)); //добавляем оба значения
                 }
             } else if (file1.containsKey(key) && (!file2.containsKey(key))) { //если есть в 1, но нет в 2
-                matches.put((String) "- " + key, (value1).toString());
+                matches.put((String) "del" + key, (value1)); // значение удалилось
             } else {                                                          // если нет в 1, но есть во 2
-                matches.put((String) "+ " + key, (value2).toString());
+                matches.put((String) "add" + key, (value2)); // значение добавилось
             }
         }
         result.add(matches);
