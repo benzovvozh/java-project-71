@@ -31,21 +31,11 @@ public class Differ {
     }
 
     private static String readFile(String filepath) throws Exception {
-
-        if (filepath.contains("src/test/resources/")) {
-            String[] words1 = filepath.split("/");
-            filepath = words1[words1.length - 1];
-        }
-
         Path path = getFixturePath(filepath);
-        // Проверяем существование файла
         if (!Files.exists(path)) {
             throw new Exception("File '" + path + "' does not exist");
         }
-        // Читаем файл
-        String content = Files.readString(path);
-
-        return content;
+        return Files.readString(path);
     }
 
     private static String getFileType(String filepath) {
