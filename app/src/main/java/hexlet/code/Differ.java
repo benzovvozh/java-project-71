@@ -25,6 +25,21 @@ public class Differ {
 
         return Formatter.format(result, format);
     }
+    public static String generate(String filepath1, String filepath2) throws Exception {
+        String content1 = readFile(filepath1);
+        String content2 = readFile(filepath2);
+
+        String fileType1 = getFileType(filepath1);
+        String fileType2 = getFileType(filepath2);
+
+        var file1 = Parser.parse(content1, fileType1);
+        var file2 = Parser.parse(content2, fileType2);
+
+        List<Map<String, Object>> result = MapComparator.compare(file1, file2);
+
+
+        return Formatter.format(result, null);
+    }
 
     private static String readFile(String filepath) throws Exception {
 

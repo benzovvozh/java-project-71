@@ -11,10 +11,11 @@ public class Formatter {
     public static String format(List<Map<String, Object>> differences, String formatName) throws Exception {
 
         return switch (formatName) {
-            case "" -> Stylish.format(differences);
+
             case "json" -> Json.format(differences);
             case "stylish" -> Stylish.format(differences);
             case "plain" -> Plain.format(differences);
+            case null -> Stylish.format(differences);
             default -> throw new Exception("Unknown format: '" + formatName + "'");
         };
     }
