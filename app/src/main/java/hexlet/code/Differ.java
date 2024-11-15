@@ -48,7 +48,12 @@ public class Differ {
     }
 
     private static Path getFixturePath(String fileName) {
-        return Paths.get("src", "test", "resources", fileName)
+        String file = fileName;
+        if (fileName.contains("src/test/resources/")) {
+            String[] sdad = fileName.split("/");
+            file = sdad[sdad.length - 1];
+        }
+        return Paths.get("src", "test", "resources", file)
                 .toAbsolutePath().normalize();
     }
 
