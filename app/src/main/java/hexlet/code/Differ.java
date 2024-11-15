@@ -32,6 +32,10 @@ public class Differ {
 
     private static String readFile(String filepath) throws Exception {
 
+        if (filepath.contains("src/test/resources/")) {
+            String[] words1 = filepath.split("/");
+            filepath = words1[words1.length - 1];
+        }
 
         Path path = getFixturePath(filepath);
         // Проверяем существование файла
