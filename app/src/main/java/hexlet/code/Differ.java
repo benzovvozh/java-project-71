@@ -43,8 +43,8 @@ public class Differ {
 
     private static String readFile(String filepath) throws Exception {
 
-        String readFilePath = "src/test/resources/fixtures" + filepath;
-        Path path = Paths.get(readFilePath).toAbsolutePath().normalize();
+        String readFilePath = getFixturePath(filepath) + filepath;
+        Path path = getFixturePath(filepath);
         // Проверяем существование файла
         if (!Files.exists(path)) {
             throw new Exception("File '" + path + "' does not exist");
@@ -58,9 +58,15 @@ public class Differ {
     private static String getFileType(String filepath) {
         // возвращает расширение файла (json, yml, yaml)
         // сплитим по точке и берем последний элемент массива
-        String readFilePath = "src/test/resources/fixtures" + filepath;
+        String readFilePath = "src/test/resources/" + filepath;
         String[] words = readFilePath.split("\\.");
         String fileType = words[words.length - 1];
         return fileType;
     }
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName)
+                .toAbsolutePath().normalize();
+    }
+
 }
+
