@@ -64,7 +64,7 @@ public class Differ {
         return fileType;
     }
     private static Path getFixturePath(String fileName) {
-        return Paths.get("src", "test", "resources", "fixtures", fileName)
+        return Paths.get("src", "test", "resources", fileName)
                 .toAbsolutePath().normalize();
     }
 
