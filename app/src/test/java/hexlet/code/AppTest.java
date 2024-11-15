@@ -23,17 +23,17 @@ class AppTest {
     @BeforeAll
     public static void beforeAll() throws IOException {
 
-        exceptedDefault = new String(Files.readString(Paths.get("src/test/resources/callTest.txt")
+        exceptedDefault = new String(Files.readString(Paths.get("src/test/resources/fixtures/callTest.txt")
                 .toAbsolutePath().normalize()));
-        exceptedYamlTest = new String(Files.readString(Paths.get("src/test/resources/callYamlTest.txt")
+        exceptedYamlTest = new String(Files.readString(Paths.get("src/test/resources/fixtures/callYamlTest.txt")
                 .toAbsolutePath().normalize()));
-        exceptedJsonPlain = new String(Files.readString(Paths.get("src/test/resources/callPlainTest.txt")
+        exceptedJsonPlain = new String(Files.readString(Paths.get("src/test/resources/fixtures/callPlainTest.txt")
                 .toAbsolutePath().normalize()));
-        exceptedJsonJson = new String(Files.readString(Paths.get("src/test/resources/callJsonTest.txt")
+        exceptedJsonJson = new String(Files.readString(Paths.get("src/test/resources/fixtures/callJsonTest.txt")
                 .toAbsolutePath().normalize()));
-        exceptedYamlPlain = new String(Files.readString(Paths.get("src/test/resources/callPlainYamlTest.txt")
+        exceptedYamlPlain = new String(Files.readString(Paths.get("src/test/resources/fixtures/callPlainYamlTest.txt")
                 .toAbsolutePath().normalize()));
-        exceptedYamlJsonTest = new String(Files.readString(Paths.get("src/test/resources/callYamlJsonTest.txt")
+        exceptedYamlJsonTest = new String(Files.readString(Paths.get("src/test/resources/fixtures/callYamlJsonTest.txt")
                 .toAbsolutePath().normalize()));
     }
 
