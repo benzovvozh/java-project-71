@@ -43,7 +43,7 @@ public class Differ {
 
     private static String readFile(String filepath) throws Exception {
 
-        String readFilePath = "src/test/resources/" + filepath;
+        String readFilePath = "src/test/resources/fixtures/" + filepath;
         Path path = Paths.get(readFilePath).toAbsolutePath().normalize();
         // Проверяем существование файла
         if (!Files.exists(path)) {
@@ -58,7 +58,7 @@ public class Differ {
     private static String getFileType(String filepath) {
         // возвращает расширение файла (json, yml, yaml)
         // сплитим по точке и берем последний элемент массива
-        String readFilePath = "src/test/resources/" + filepath;
+        String readFilePath = "src/test/resources/fixtures/" + filepath;
         String[] words = readFilePath.split("\\.");
         String fileType = words[words.length - 1];
         return fileType;
