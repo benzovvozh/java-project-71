@@ -9,7 +9,7 @@ import java.util.concurrent.Callable;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "checksum 4.0",
         description = "Compares two configuration files and shows a difference.")
-public class App implements Callable<Integer> {
+public final class App implements Callable<Integer> {
     @Option(
             names = {"-f", "--format"},
             defaultValue = "stylish",
