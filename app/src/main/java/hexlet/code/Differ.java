@@ -58,7 +58,7 @@ public class Differ {
         if (Files.exists(path)) {
             return path.toAbsolutePath().normalize();
         }
-        return Paths.get( "src", "test", "resources", file)
+        return Paths.get( "src", "test", "resources","fixtures", file)
                 .toAbsolutePath().normalize();
     }
 

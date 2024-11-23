@@ -53,7 +53,7 @@ public class Plain {
             }
 
         }
-
+        result1.deleteCharAt(result1.length() - 1);
         return result1.toString();
     }
 
