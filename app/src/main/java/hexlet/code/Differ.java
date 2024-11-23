@@ -41,7 +41,7 @@ public class Differ {
     private static String getFileType(String filepath) {
         // возвращает расширение файла (json, yml, yaml)
         // сплитим по точке и берем последний элемент массива
-        String readFilePath = "src/test/resources/" + filepath;
+        String readFilePath = filepath;
         String[] words = readFilePath.split("\\.");
         String fileType = words[words.length - 1];
         return fileType;
@@ -49,7 +49,7 @@ public class Differ {
 
     private static Path getFixturePath(String fileName) {
         String file = fileName;
-        if (fileName.contains("src/test/resources/")) {
+        if (fileName.contains("src/test/resources")) {
             String[] sdad = fileName.split("/");
             file = sdad[sdad.length - 1];
         }
