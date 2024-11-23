@@ -31,6 +31,7 @@ public class Differ {
     }
 
     private static String readFile(String filepath) throws Exception {
+        // /project/src/test/resources/file1.json
         Path path = getFixturePath(filepath);
         if (!Files.exists(path)) {
             throw new Exception("File '" + path + "' does not exist");
@@ -50,10 +51,14 @@ public class Differ {
     private static Path getFixturePath(String fileName) {
         String file = fileName;
         if (fileName.contains("src/test/resources")) {
-            String[] sdad = fileName.split("/");
-            file = sdad[sdad.length - 1];
+            String[] splitArray = fileName.split("/");
+            file = splitArray[splitArray.length - 1];
         }
-        return Paths.get("src", "test", "resources", file)
+        Path path = Paths.get(fileName);
+        if (Files.exists(path)) {
+            return path.toAbsolutePath().normalize();
+        }
+        return Paths.get( "src", "test", "resources", file)
                 .toAbsolutePath().normalize();
     }
 
