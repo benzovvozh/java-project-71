@@ -42,7 +42,7 @@ class AppTest {
         // тест без явного указания формата (json files)
     void callNonFormatJson() throws Exception {
         String expected = exceptedDefault;
-        String actual = Differ.generate("fixtures/file1.json", "fixtures/file2.json");
+        String actual = Differ.generate("file1.json", "file2.json");
         assertEquals(expected.trim(), actual.trim());
     }
 
@@ -50,7 +50,7 @@ class AppTest {
         // тест без явного указания формата (yaml files)
     void callNonFormatYaml() throws Exception {
         String expected = exceptedYamlTest;
-        String actual = Differ.generate("fixtures/file1.yaml", "fixtures/file2.yaml");
+        String actual = Differ.generate("file1.yaml", "file2.yaml");
         assertEquals(expected.trim(), actual.trim());
     }
 
@@ -58,7 +58,7 @@ class AppTest {
         // тест yaml файлов (json)
     void callYaml() throws Exception {
         String expected = exceptedYamlJsonTest;
-        String actual = Differ.generate("fixtures/file1.yaml", "fixtures/file2.yaml", "json");
+        String actual = Differ.generate("file1.yaml", "file2.yaml", "json");
         assertEquals(expected.trim(), actual.trim());
     }
 
@@ -66,7 +66,7 @@ class AppTest {
         // тест yaml файлов (plain)
     void callYamlPlain() throws Exception {
         String expected = exceptedYamlPlain;
-        String actual = Differ.generate("fixtures/file1.yaml", "fixtures/file2.yaml", "plain");
+        String actual = Differ.generate("file1.yaml", "file2.yaml", "plain");
         assertEquals(expected.trim(), actual.trim());
     }
 
@@ -74,7 +74,7 @@ class AppTest {
         // тест yaml файлов (stylish)
     void callYamlStylish() throws Exception {
         String expected = exceptedYamlTest;
-        String actual = Differ.generate("fixtures/file1.yaml", "fixtures/file2.yaml", "stylish");
+        String actual = Differ.generate("file1.yaml", "file2.yaml", "stylish");
         assertEquals(expected.trim(), actual.trim());
     }
 
@@ -83,7 +83,7 @@ class AppTest {
         // тест plain (json files)
     void callPlainJson() throws Exception {
         String expected = exceptedJsonPlain;
-        String actual = Differ.generate("fixtures/file1.json", "fixtures/file2.json", "plain");
+        String actual = Differ.generate("file1.json", "file2.json", "plain");
         assertEquals(expected.trim(), actual.trim());
     }
 
@@ -91,7 +91,7 @@ class AppTest {
         // тест json (json files)
     void callJsonJson() throws Exception {
         String expected = exceptedJsonJson;
-        String actual = Differ.generate("fixtures/file1.json", "fixtures/file2.json", "json");
+        String actual = Differ.generate("file1.json", "file2.json", "json");
         assertEquals(expected.trim(), actual.trim());
     }
 
@@ -99,7 +99,7 @@ class AppTest {
         // тест stylish0 (json files)
     void callStylishJson() throws Exception {
         String expected = exceptedDefault;
-        String actual = Differ.generate("fixtures/file1.json", "fixtures/file2.json", "stylish");
+        String actual = Differ.generate("file1.json", "file2.json", "stylish");
         assertEquals(expected.trim(), actual.trim());
     }
 
