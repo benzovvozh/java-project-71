@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Plain {
+    private static final int INDEX = 3;
+
     public static String format(List<Map<String, Object>> result) {
         String property = "Property '";
         String upd = "' was updated.";
@@ -20,7 +22,7 @@ public class Plain {
 
                 String key = entry.getKey();
                 Object value = entry.getValue();
-                String realKey = key.substring(3);
+                String realKey = key.substring(INDEX);
                 var replacedKey = key.replace("up+", "up-");
 
 

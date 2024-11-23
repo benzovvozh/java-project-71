@@ -7,6 +7,8 @@ import java.util.TreeMap;
 import java.util.ArrayList;
 
 public class MapComparator {
+    private static final int INDEX = 3;
+
     public static List<Map<String, Object>> compare(Map<String, Object> file1, Map<String, Object> file2) {
         // сортируем уникальные ключи
         var keys = new TreeSet<>();
@@ -18,7 +20,7 @@ public class MapComparator {
             if (key1.startsWith("up+") && key2.startsWith("up-")) {
                 return 1;
             }
-            return key1.substring(3).compareTo(key2.substring(3));
+            return key1.substring(INDEX).compareTo(key2.substring(INDEX));
         });
 
         List<Map<String, Object>> result = new ArrayList<>();

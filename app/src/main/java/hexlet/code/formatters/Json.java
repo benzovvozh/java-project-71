@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Json {
+    private static final int INDEX = 3;
+
     public static String format(List<Map<String, Object>> result) throws Exception {
         ObjectMapper mapperJson = new ObjectMapper();
 
@@ -24,7 +26,7 @@ public class Json {
             for (Map.Entry<String, Object> entry : item.entrySet()) {
                 var key = entry.getKey();
                 var value = entry.getValue();
-                String formattedKey = key.substring(3);
+                String formattedKey = key.substring(INDEX);
                 map.put(formattedKey, value);
             }
             formatted.add(map);
