@@ -11,19 +11,19 @@ public class Data {
     private String key;
     private Status status;
 
-    public Object getOldValue() {
+    public final Object getOldValue() {
         return oldValue;
     }
 
-    public Object getNewValue() {
+    public final Object getNewValue() {
         return newValue;
     }
 
-    public String getKey() {
+    public final String getKey() {
         return key;
     }
 
-    public Status getStatus() {
+    public final Status getStatus() {
         return status;
     }
 
