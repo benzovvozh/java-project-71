@@ -1,11 +1,13 @@
 package hexlet.code;
 
 
+import hexlet.code.utils.Data;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Map;
+
 
 public class Differ {
 
@@ -20,7 +22,8 @@ public class Differ {
         var file1 = Parser.parse(content1, fileType1);
         var file2 = Parser.parse(content2, fileType2);
 
-        List<Map<String, Object>> result = MapComparator.compare(file1, file2);
+        List<Data> result = MapComparator.compare(file1, file2);
+
 
 
         return Formatter.format(result, format);

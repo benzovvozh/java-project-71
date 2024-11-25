@@ -12,7 +12,6 @@ import java.util.Map;
 public class Parser {
     public static Map<String, Object> parse(String content, String format) throws Exception {
         // парсим файл
-
         Map<String, Object> map = new HashMap<>();
         if (format.equals("json")) {
             ObjectMapper mapperJson = new ObjectMapper();
@@ -24,10 +23,6 @@ public class Parser {
             });
 
         }
-
-
-
-
         return map;
     }
 }

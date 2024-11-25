@@ -1,65 +1,56 @@
 package hexlet.code.formatters;
 
+import hexlet.code.utils.Data;
+import hexlet.code.utils.Status;
 
 import java.util.List;
-import java.util.Map;
 
 public class Plain {
-    private static final int INDEX = 3;
 
-    public static String format(List<Map<String, Object>> result) {
+    public static String format(List<Data> result) {
         String property = "Property '";
         String upd = "' was updated.";
         String add = "' was added with value: ";
         String rem = "' was removed";
 
         StringBuilder result1 = new StringBuilder();
-        // обходим лист мап
-        for (Map<String, Object> item : result) {
-            // обходим каждую мапу
-            // перебираем каждую пару ключ-значение в карте
-            for (Map.Entry<String, Object> entry : item.entrySet()) {
-
-                String key = entry.getKey();
-                Object value = entry.getValue();
-                String realKey = key.substring(INDEX);
-                var replacedKey = key.replace("up+", "up-");
+        // обходим данные
+        for (Data item : result) {
+            var oldValue = item.getOldValue();
+            var newValue = item.getNewValue();
+            var status = item.getStatus();
+            var key = item.getKey();
 
 
-                if (key.startsWith("up+")) {
-                    var oldValue = item.get(replacedKey);
+            if (status.equals(Status.CHANGED)) {
 
-
-                    result1.append(property)
-                            .append(realKey)
-                            .append(upd)
-                            .append(" From ")
-                            .append(form(oldValue))
-                            .append(" to ")
-                            .append(form(value))
-                            .append("\n");
-                } else if (key.startsWith("del")) {
-                    result1.append(property)
-                            .append(realKey)
-                            .append(rem)
-                            .append("\n");
-                } else if (key.startsWith("add")) {
-                    result1.append(property)
-                            .append(realKey)
-                            .append(add)
-                            .append(form(value))
-                            .append("\n");
-                }
-
-
+                result1.append(property)
+                        .append(key)
+                        .append(upd)
+                        .append(" From ")
+                        .append(form(oldValue))
+                        .append(" to ")
+                        .append(form(newValue))
+                        .append("\n");
+            } else if (status.equals(Status.REMOVED)) {
+                result1.append(property)
+                        .append(key)
+                        .append(rem)
+                        .append("\n");
+            } else if (status.equals(Status.ADDED)) {
+                result1.append(property)
+                        .append(key)
+                        .append(add)
+                        .append(form(newValue))
+                        .append("\n");
             }
-
         }
+
         result1.deleteCharAt(result1.length() - 1);
         return result1.toString();
     }
 
-    public static Object form(Object value) {
+    private static Object form(Object value) {
         if (value == null || value.equals("null")) {
             return "null"; // Обработка null значений
         } else if (value instanceof String) {

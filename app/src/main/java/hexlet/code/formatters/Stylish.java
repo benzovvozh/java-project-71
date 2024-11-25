@@ -1,40 +1,41 @@
 package hexlet.code.formatters;
 
+import hexlet.code.utils.Data;
+import hexlet.code.utils.Status;
 
 import java.util.List;
-import java.util.Map;
 
 
 public class Stylish {
-    private static final int INDEX = 3;
 
-    public static String format(List<Map<String, Object>> result) {
+
+    public static String format(List<Data> result) {
+        // создаем string builder
         StringBuilder result1 = new StringBuilder("{\n");
-        // обходим лист мап
-        for (Map<String, Object> item : result) {
-            // обходим каждую мапу
-            // перебираем каждую пару ключ-значение в карте
-            for (Map.Entry<String, Object> entry : item.entrySet()) {
-                var value = entry.getKey();
-                if (value.toString().startsWith("not")) {
-                    result1.append("    ").append(entry.getKey().toString().substring(INDEX)).append(": ")
-                            .append(entry.getValue()).append("\n");
-                } else if (value.toString().startsWith("del")) {
-                    result1.append("  - ").append(entry.getKey().toString().substring(INDEX)).append(": ")
-                            .append(entry.getValue()).append("\n");
-                } else if (value.toString().startsWith("add")) {
-                    result1.append("  + ").append(entry.getKey().toString().substring(INDEX)).append(": ")
-                            .append(entry.getValue()).append("\n");
-                } else if (value.toString().startsWith("up-")) {
-                    result1.append("  - ").append(entry.getKey().toString().substring(INDEX)).append(": ")
-                            .append(entry.getValue()).append("\n");
-                } else if (value.toString().startsWith("up+")) {
-                    result1.append("  + ").append(entry.getKey().toString().substring(INDEX)).append(": ")
-                            .append(entry.getValue()).append("\n");
-                }
-
-
+        // обходим лист данных
+        for (Data item : result) {
+            var oldValue = item.getOldValue();
+            var newValue = item.getNewValue();
+            var status = item.getStatus();
+            var key = item.getKey();
+            // заполняем result1
+            if (status.equals(Status.UNCHANGED)) {
+                result1.append("    ").append(key.toString()).append(": ")
+                        .append(newValue).append("\n");
+            } else if (status.equals(Status.CHANGED)) {
+                result1.append("  - ").append(key.toString()).append(": ")
+                        .append(oldValue).append("\n")
+                        .append("  + ").append(key.toString()).append(": ")
+                        .append(newValue).append("\n");
+            } else if (status.equals(Status.ADDED)) {
+                result1.append("  + ").append(key.toString()).append(": ")
+                        .append(newValue).append("\n");
+            } else if (status.equals(Status.REMOVED)) {
+                result1.append("  - ").append(key.toString()).append(": ")
+                        .append(oldValue).append("\n");
             }
+
+
         }
         result1.append("}");
         return result1.toString();
