@@ -10,7 +10,7 @@ public class Stylish {
         // создаем string builder
         StringBuilder result1 = new StringBuilder("{\n");
 
-        // обходим лист данных
+        // обходим List
         for (Map<String, Object> item : result) {
 
             // получаем ключ added/deleted/change (correct)

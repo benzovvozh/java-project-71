@@ -1,51 +1,69 @@
 package hexlet.code.formatters;
 
-import hexlet.code.utils.Data;
-import hexlet.code.utils.Status;
-
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Plain {
 
     public static String format(List<Map<String, Object>> result) {
+        // создаем строки для упрощения создания отчета
         String property = "Property '";
-        String upd = "' was updated.";
+        String update = "' was updated.";
         String add = "' was added with value: ";
-        String rem = "' was removed";
+        String remove = "' was removed";
 
+        // создаем StringBuilder
         StringBuilder result1 = new StringBuilder();
-        // обходим данные
-        for (Map<String, Object> item : result) {
-            String key = item.keySet().iterator().next();// added/deleted/change
-            var value = item.get(key); //Map<String, Object> ..;
 
+        // обходим List
+        for (int i = 0; i < result.size(); i++) {
+            Map<String, Object> item = new HashMap<>(result.get(i));
+            // получаем ключ added/deleted/change+- (correct)
+            String keyFromList = item.keySet().iterator().next();
 
-            if (item.containsKey("deleted")) { // equlas " "
+            // получаем Map<String, Object> (correct)
+            Map<String, Object> map = (Map<String, Object>) item.get(keyFromList);
+
+            // получаем ключ из map (correct)
+            String mapKey = map.keySet().iterator().next();
+
+            // получаем значение из map
+            var value = map.get(mapKey);
+            // если было изменение
+            if (item.containsKey("change+")) {
+                //создаем объект - старое значение
+                Object oldValue = null;
+                if (i > 0 && result.get(i - 1).containsKey("change-")) {
+                    Map<String, Object> bigMap = result.get(i - 1); // change- : fruit: apple
+                    Map<String, Object> miniMap = (Map<String, Object>) bigMap.get("change-"); // fruit: apple
+                    oldValue = miniMap.get(mapKey); // apple
+                }
+                // собираем строку
                 result1.append(property)
-                        .append(key)
-                        .append(upd)
+                        .append(mapKey)
+                        .append(update)
                         .append(" From ")
-                        .append(form(value))
+                        .append(form(oldValue))
                         .append(" to ")
-                        .append(value)
+                        .append(form(value))
                         .append("\n");
-            } else if (item.containsKey("deleted")) { //eqauls "-"
+                //если было удалено
+            } else if (item.containsKey("deleted")) {
                 result1.append(property)
-                        .append(key)
-                        .append(rem)
+                        .append(mapKey)
+                        .append(remove)
                         .append("\n");
-            } else if (item.containsKey("added")) { // equals "+"
+                //если было добавлено
+            } else if (item.containsKey("added")) {
                 result1.append(property)
-                        .append(key)
+                        .append(mapKey)
                         .append(add)
                         .append(form(value))
                         .append("\n");
             }
         }
-
+        //удаляем последний лишний символ в строке (\n)
         result1.deleteCharAt(result1.length() - 1);
         return result1.toString();
     }
@@ -56,7 +74,7 @@ public class Plain {
         } else if (value instanceof String) {
             return "'" + value + "'"; // Обрамляем строку кавычками
         } else if (value instanceof Boolean || value instanceof Integer) {
-            return value; // Возвращаем булевое или целочисленное значение как есть
+            return value; // Возвращаем булево или целочисленное значение как есть
         } else {
             return "[complex value]"; // Для всех остальных типов
         }

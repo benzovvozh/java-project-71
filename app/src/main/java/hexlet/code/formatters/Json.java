@@ -1,40 +1,30 @@
 package hexlet.code.formatters;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import hexlet.code.utils.Data;
-import hexlet.code.utils.Status;
+
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class Json {
-
     public static String format(List<Map<String, Object>> result) throws Exception {
+
         ObjectMapper mapperJson = new ObjectMapper();
+        List<Map<String, Object>> result1 = new ArrayList<>();
 
-        return mapperJson.writeValueAsString(result);
+        for (var item : result) {
+            // получаем ключ added/deleted/change (correct)
+            String keyFromList = item.keySet().iterator().next();
+
+            // получаем Map<String, Object> (correct)
+            Map<String, Object> map = (Map<String, Object>) item.get(keyFromList);
+            result1.add(map);
+        }
+        var some = mapperJson.writeValueAsString(result1)
+                .replace("{", "").replace("}","");
+        var some1 = "[{" + some.substring(1, some.length()-1) + "}]";
+        // не закончен
+
+        return some1;
     }
-
-//    public static List<Map<String, Object>> formattedList(List<Data> result) throws Exception {
-//        List<Map<String, Object>> formatted = new ArrayList<>();
-//        Map<String, Object> map = new LinkedHashMap<>();
-//        // обходим объекты
-//        for (Data item : result) {
-//            if (item.getStatus().equals(Status.ADDED)) {
-//                map.put(item.getKey(), item.getNewValue());
-//            } else if (item.getStatus().equals(Status.CHANGED)) {
-//                map.put(item.getKey(), item.getOldValue());
-//                map.put(item.getKey(), item.getNewValue());
-//            } else if (item.getStatus().equals(Status.REMOVED)) {
-//                map.put(item.getKey(), item.getOldValue());
-//            } else {
-//                map.put(item.getKey(), item.getNewValue());
-//            }
-//        }
-//        formatted.add(map);
-//        return formatted;
-//    }
 }
