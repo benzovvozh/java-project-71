@@ -12,30 +12,29 @@ import java.util.Map;
 
 public class Json {
 
-
-    public static String format(List<Data> result) throws Exception {
+    public static String format(List<Map<String, Object>> result) throws Exception {
         ObjectMapper mapperJson = new ObjectMapper();
 
-        return mapperJson.writeValueAsString(formattedList(result));
+        return mapperJson.writeValueAsString(result);
     }
 
-    public static List<Map<String, Object>> formattedList(List<Data> result) throws Exception {
-        List<Map<String, Object>> formatted = new ArrayList<>();
-        Map<String, Object> map = new LinkedHashMap<>();
-        // обходим объекты
-        for (Data item : result) {
-            if (item.getStatus().equals(Status.ADDED)) {
-                map.put(item.getKey(), item.getNewValue());
-            } else if (item.getStatus().equals(Status.CHANGED)) {
-                map.put(item.getKey(), item.getOldValue());
-                map.put(item.getKey(), item.getNewValue());
-            } else if (item.getStatus().equals(Status.REMOVED)) {
-                map.put(item.getKey(), item.getOldValue());
-            } else {
-                map.put(item.getKey(), item.getNewValue());
-            }
-        }
-        formatted.add(map);
-        return formatted;
-    }
+//    public static List<Map<String, Object>> formattedList(List<Data> result) throws Exception {
+//        List<Map<String, Object>> formatted = new ArrayList<>();
+//        Map<String, Object> map = new LinkedHashMap<>();
+//        // обходим объекты
+//        for (Data item : result) {
+//            if (item.getStatus().equals(Status.ADDED)) {
+//                map.put(item.getKey(), item.getNewValue());
+//            } else if (item.getStatus().equals(Status.CHANGED)) {
+//                map.put(item.getKey(), item.getOldValue());
+//                map.put(item.getKey(), item.getNewValue());
+//            } else if (item.getStatus().equals(Status.REMOVED)) {
+//                map.put(item.getKey(), item.getOldValue());
+//            } else {
+//                map.put(item.getKey(), item.getNewValue());
+//            }
+//        }
+//        formatted.add(map);
+//        return formatted;
+//    }
 }

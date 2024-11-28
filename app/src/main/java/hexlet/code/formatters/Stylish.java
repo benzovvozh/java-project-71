@@ -1,41 +1,42 @@
 package hexlet.code.formatters;
 
-import hexlet.code.utils.Data;
-import hexlet.code.utils.Status;
-
 import java.util.List;
-
+import java.util.Map;
 
 public class Stylish {
 
 
-    public static String format(List<Data> result) {
+    public static String format(List<Map<String, Object>> result) {
         // создаем string builder
         StringBuilder result1 = new StringBuilder("{\n");
         // обходим лист данных
-        for (Data item : result) {
-            var oldValue = item.getOldValue();
-            var newValue = item.getNewValue();
-            var status = item.getStatus();
-            var key = item.getKey();
+        for (Map<String, Object> item : result) {
+            // получаем ключ added/deleted/change
+            String keyFromList = item.keySet().iterator().next();
+            // получаем Map<String, Object>
+            Map<String, Object> map = (Map<String, Object>) item.get(keyFromList);
+            // получаем ключ из map
+            String mapKey =  map.keySet().iterator().next();
+            // получаем значение из map
+            var value = map.get(mapKey);
+
             // заполняем result1
-            if (status.equals(Status.UNCHANGED)) {
-                result1.append("    ").append(key.toString()).append(": ")
-                        .append(newValue).append("\n");
-            } else if (status.equals(Status.CHANGED)) {
-                result1.append("  - ").append(key.toString()).append(": ")
-                        .append(oldValue).append("\n")
-                        .append("  + ").append(key.toString()).append(": ")
-                        .append(newValue).append("\n");
-            } else if (status.equals(Status.ADDED)) {
-                result1.append("  + ").append(key.toString()).append(": ")
-                        .append(newValue).append("\n");
-            } else if (status.equals(Status.REMOVED)) {
-                result1.append("  - ").append(key.toString()).append(": ")
-                        .append(oldValue).append("\n");
+            if (item.containsKey("unchanged")) {
+                result1.append("    ").append(mapKey).append(": ")
+                        .append(value).append("\n");
+            } else if (item.containsKey("changed-")) {
+                result1.append("  - ").append(mapKey).append(": ")
+                        .append(value).append("\n");
+            } else if (item.containsKey("change+")) {
+                result1.append("  + ").append(mapKey).append(": ")
+                        .append(value).append("\n");
+            } else if (item.containsKey("added")) {
+                result1.append("  + ").append(mapKey).append(": ")
+                        .append(value).append("\n");
+            } else if (item.containsKey("deleted")) {
+                result1.append("  - ").append(mapKey).append(": ")
+                        .append(value).append("\n");
             }
-
-
         }
         result1.append("}");
         return result1.toString();

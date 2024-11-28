@@ -1,8 +1,6 @@
 package hexlet.code.utils;
 
-
 import lombok.Setter;
-
 
 @Setter
 public class Data {
@@ -26,7 +24,6 @@ public class Data {
     public final Status getStatus() {
         return status;
     }
-
 
     public Data(String key, Status status, Object oldValue, Object newValue) {
         this.key = key;

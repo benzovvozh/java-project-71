@@ -3,11 +3,14 @@ package hexlet.code.formatters;
 import hexlet.code.utils.Data;
 import hexlet.code.utils.Status;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Plain {
 
-    public static String format(List<Data> result) {
+    public static String format(List<Map<String, Object>> result) {
         String property = "Property '";
         String upd = "' was updated.";
         String add = "' was added with value: ";
@@ -15,33 +18,30 @@ public class Plain {
 
         StringBuilder result1 = new StringBuilder();
         // обходим данные
-        for (Data item : result) {
-            var oldValue = item.getOldValue();
-            var newValue = item.getNewValue();
-            var status = item.getStatus();
-            var key = item.getKey();
+        for (Map<String, Object> item : result) {
+            String key = item.keySet().iterator().next();// added/deleted/change
+            var value = item.get(key); //Map<String, Object> ..;
 
 
-            if (status.equals(Status.CHANGED)) {
-
+            if (item.containsKey("deleted")) { // equlas " "
                 result1.append(property)
                         .append(key)
                         .append(upd)
                         .append(" From ")
-                        .append(form(oldValue))
+                        .append(form(value))
                         .append(" to ")
-                        .append(form(newValue))
+                        .append(value)
                         .append("\n");
-            } else if (status.equals(Status.REMOVED)) {
+            } else if (item.containsKey("deleted")) { //eqauls "-"
                 result1.append(property)
                         .append(key)
                         .append(rem)
                         .append("\n");
-            } else if (status.equals(Status.ADDED)) {
+            } else if (item.containsKey("added")) { // equals "+"
                 result1.append(property)
                         .append(key)
                         .append(add)
-                        .append(form(newValue))
+                        .append(form(value))
                         .append("\n");
             }
         }

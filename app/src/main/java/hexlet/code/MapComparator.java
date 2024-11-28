@@ -13,23 +13,25 @@ import java.util.Objects;
 
 public class MapComparator {
 
-
-    public static List<Data> compare(Map<String, Object> file1, Map<String, Object> file2) {
+    public static List<Map<String, Object>> compare(Map<String, Object> file1, Map<String, Object> file2) {
         // копируем две мапы в одну
         Map<String, Object> keys = new HashMap<>(file1);
         keys.putAll(file2);
 
         // создаём список мап
-        List<Data> result = new ArrayList<>();
+        List<Map<String, Object>> result = new ArrayList<>();
 
         // создаем TreeMap для сортировки мап по алфавиту
         var sortedMap = new TreeMap<>(keys);
+        System.out.println(sortedMap.keySet());
 
-        // обход ключей
+        // обход ключей отсортированных по алфавиту
         for (Map.Entry<String, Object> entry : sortedMap.entrySet()) {
             var key = entry.getKey();
+
             var value1 = file1.get(key);
             var value2 = file2.get(key);
+
             // проверка на null
             if (value1 == null) {
                 value1 = "null";
@@ -44,23 +46,32 @@ public class MapComparator {
 
                 // если равны
                 if (Objects.equals(value1, value2)) {
-                    result.add(new Data(key.toString(), Status.UNCHANGED, value1, value2));
-
+                    result.add(createResultMap("unchanged", key, value1));
                     // если не равны
-                } else if (!Objects.equals(value1, value2)) {
-                    result.add(new Data(key.toString(), Status.CHANGED, value1, value2));
+                } else {
+                    result.add(createResultMap("change-", key, value1));
+                    result.add(createResultMap("change+", key, value2));
                 }
-
                 //если есть в 1, но нет в 2
             } else if (file1.containsKey(key) && (!file2.containsKey(key))) {
-                result.add(new Data(key.toString(), Status.REMOVED, value1));
-
+                result.add(createResultMap("deleted", key, value1));
                 // если нет в 1, но есть во 2
             } else {
-                result.add(new Data(key.toString(), Status.ADDED, value1, value2));
+                result.add(createResultMap("added", key, value2));
+
             }
         }
-        // получаем список Data, в котором записаны ключи, статус, значение
         return result;
+    }
+
+    // метод создает результирующую мапу
+    private static Map<String, Object> createResultMap(String status, String key, Object value) {
+        // создаём маленькую мапу, например fruit: apple
+        Map<String, Object> miniMap = new HashMap<>();
+        miniMap.put(key, value);
+        // создаем мапу-результат, в качестве ключа - статус(строка), а в качестве значения маленькая мапа
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put(status, miniMap);
+        return resultMap;
     }
 }
