@@ -1,8 +1,5 @@
 package hexlet.code;
 
-import hexlet.code.utils.Data;
-import hexlet.code.utils.Status;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +20,6 @@ public class MapComparator {
 
         // создаем TreeMap для сортировки мап по алфавиту
         var sortedMap = new TreeMap<>(keys);
-        System.out.println(sortedMap.keySet());
 
         // обход ключей отсортированных по алфавиту
         for (Map.Entry<String, Object> entry : sortedMap.entrySet()) {
