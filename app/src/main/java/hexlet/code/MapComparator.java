@@ -28,6 +28,8 @@ public class MapComparator {
             var value1 = file1.get(key);
             var value2 = file2.get(key);
 
+            Map<String, Object> node = new HashMap<>();
+
             // проверка на null
             if (value1 == null) {
                 value1 = "null";
@@ -42,32 +44,34 @@ public class MapComparator {
 
                 // если равны
                 if (Objects.equals(value1, value2)) {
-                    result.add(createResultMap("unchanged", key, value1));
+                    node.put("type", "unchanged");
+                    node.put("value", value1);
+                    result.add(node);
                     // если не равны
                 } else {
-                    result.add(createResultMap("change-", key, value1));
-                    result.add(createResultMap("change+", key, value2));
+                    node.put("type", "changed");
+                    node.put("value1", value1);
+                    node.put("value2", value2);
+                    result.add(node);
+
                 }
                 //если есть в 1, но нет в 2
             } else if (file1.containsKey(key) && (!file2.containsKey(key))) {
-                result.add(createResultMap("deleted", key, value1));
+                node.put("type", "deleted");
+                node.put("value", value1);
+                result.add(node);
+
                 // если нет в 1, но есть во 2
             } else {
-                result.add(createResultMap("added", key, value2));
+                node.put("type", "added");
+                node.put("value", value2);
+                result.add(node);
 
             }
         }
+        System.out.println(result);
         return result;
     }
 
-    // метод создает результирующую мапу
-    private static Map<String, Object> createResultMap(String status, String key, Object value) {
-        // создаём маленькую мапу, например fruit: apple
-        Map<String, Object> miniMap = new HashMap<>();
-        miniMap.put(key, value);
-        // создаем мапу-результат, в качестве ключа - статус(строка), а в качестве значения маленькая мапа
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put(status, miniMap);
-        return resultMap;
-    }
+
 }
