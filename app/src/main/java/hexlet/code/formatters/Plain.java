@@ -1,8 +1,9 @@
 package hexlet.code.formatters;
 
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Plain {
 
@@ -17,49 +18,43 @@ public class Plain {
         StringBuilder result1 = new StringBuilder();
 
         // обходим List
-        for (int i = 0; i < result.size(); i++) {
-            Map<String, Object> item = new HashMap<>(result.get(i));
-            // получаем ключ added/deleted/change+- (correct)
-            String keyFromList = item.keySet().iterator().next();
+        for (var item : result) {
 
-            // получаем Map<String, Object> (correct)
-            Map<String, Object> map = (Map<String, Object>) item.get(keyFromList);
+            var type = item.get("type");
 
-            // получаем ключ из map (correct)
-            String mapKey = map.keySet().iterator().next();
+            Map<String, Object> value = (Map<String, Object>) item.get("value1");
+            var key1 = value.keySet();
+            var key = key1.toString().replace("[", "").replace("]", "");
 
-            // получаем значение из map
-            var value = map.get(mapKey);
+            var value1 = value.get(key);
+
             // если было изменение
-            if (item.containsKey("change+")) {
-                //создаем объект - старое значение
-                Object oldValue = null;
-                if (i > 0 && result.get(i - 1).containsKey("change-")) {
-                    Map<String, Object> bigMap = result.get(i - 1); // change- : fruit: apple
-                    Map<String, Object> miniMap = (Map<String, Object>) bigMap.get("change-"); // fruit: apple
-                    oldValue = miniMap.get(mapKey); // apple
-                }
+            if (Objects.equals(type, "changed")) {
+                //создаем старое значение
+                Map<String, Object> value22 = (Map<String, Object>) item.get("value2");
+                var value2 = value22.get(key);
                 // собираем строку
                 result1.append(property)
-                        .append(mapKey)
+                        .append(key)
                         .append(update)
                         .append(" From ")
-                        .append(form(oldValue))
+                        .append(form(value1))
                         .append(" to ")
-                        .append(form(value))
+                        .append(form(value2))
                         .append("\n");
                 //если было удалено
-            } else if (item.containsKey("deleted")) {
+            } else if (Objects.equals(type, "deleted")) {
                 result1.append(property)
-                        .append(mapKey)
+                        .append(key)
                         .append(remove)
                         .append("\n");
                 //если было добавлено
-            } else if (item.containsKey("added")) {
+            } else if (Objects.equals(type, "added")) {
+
                 result1.append(property)
-                        .append(mapKey)
+                        .append(key)
                         .append(add)
-                        .append(form(value))
+                        .append(form(value1))
                         .append("\n");
             }
         }

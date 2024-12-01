@@ -1,30 +1,31 @@
 package hexlet.code.formatters;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Json {
     public static String format(List<Map<String, Object>> result) throws Exception {
-
         ObjectMapper mapperJson = new ObjectMapper();
-        List<Map<String, Object>> result1 = new ArrayList<>();
 
+        // Используем LinkedHashMap для хранения всех объединенных данных
+        Map<String, Object> combinedMap = new LinkedHashMap<>();
+
+        // Обрабатываем каждый элемент списка
         for (var item : result) {
-            // получаем ключ added/deleted/change (correct)
-            String keyFromList = item.keySet().iterator().next();
+            var type = item.get("type");
 
-            // получаем Map<String, Object> (correct)
-            Map<String, Object> map = (Map<String, Object>) item.get(keyFromList);
-            result1.add(map);
+            // Добавляем значения в зависимости от типа
+            if ("changed".equals(type)) {
+                Map<String, Object> value2 = (Map<String, Object>) item.get("value2");
+                combinedMap.putAll(value2);
+            } else {
+                Map<String, Object> value1 = (Map<String, Object>) item.get("value1");
+                combinedMap.putAll(value1);
+            }
         }
-        var some = mapperJson.writeValueAsString(result1)
-                .replace("{", "").replace("}","");
-        var some1 = "[{" + some.substring(1, some.length()-1) + "}]";
-        // не закончен
 
-        return some1;
+        // Сериализуем результат в JSON
+        return "[" + mapperJson.writeValueAsString(combinedMap) + "]";
     }
 }

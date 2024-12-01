@@ -25,18 +25,20 @@ public class MapComparator {
         for (Map.Entry<String, Object> entry : sortedMap.entrySet()) {
             var key = entry.getKey();
 
-            var value1 = file1.get(key);
-            var value2 = file2.get(key);
+            Map<String, Object> value1 = new HashMap<>();
+            Map<String, Object> value2 = new HashMap<>();
+            value1.put(key, file1.get(key));
+            value2.put(key, file2.get(key));
+
 
             Map<String, Object> node = new HashMap<>();
+            if (value1.get(key) == null) {
+                value1.put(key, "null");
+            }
+            if (value2.get(key) == null) {
+                value2.put(key, "null");
+            }
 
-            // проверка на null
-            if (value1 == null) {
-                value1 = "null";
-            }
-            if (value2 == null) {
-                value2 = "null";
-            }
 
             // сравнение ключей
             // если есть и в 1 и в 2
@@ -45,7 +47,7 @@ public class MapComparator {
                 // если равны
                 if (Objects.equals(value1, value2)) {
                     node.put("type", "unchanged");
-                    node.put("value", value1);
+                    node.put("value1", value1);
                     result.add(node);
                     // если не равны
                 } else {
@@ -58,18 +60,18 @@ public class MapComparator {
                 //если есть в 1, но нет в 2
             } else if (file1.containsKey(key) && (!file2.containsKey(key))) {
                 node.put("type", "deleted");
-                node.put("value", value1);
+                node.put("value1", value1);
                 result.add(node);
 
                 // если нет в 1, но есть во 2
             } else {
                 node.put("type", "added");
-                node.put("value", value2);
+                node.put("value1", value2);
                 result.add(node);
 
             }
         }
-        System.out.println(result);
+
         return result;
     }
 
